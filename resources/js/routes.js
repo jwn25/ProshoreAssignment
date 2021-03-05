@@ -12,9 +12,29 @@ const routes = [
     children: [
       {
         path: "/",
-        name: "admin-dashboard",
+        name: "home-page",
         component: () => import("./components/pages/Home.vue"),
         meta: {
+          rule: "admin",
+        },
+      },
+
+      {
+        path: "/login",
+        name: "user-login",
+        component: () => import("./components/pages/Login.vue"),
+        meta: {
+          noAuth: true,
+          rule: "admin",
+        },
+      },
+
+      {
+        path: "/signup",
+        name: "user-signup",
+        component: () => import("./components/pages/Signup.vue"),
+        meta: {
+          noAuth: true,
           rule: "admin",
         },
       },

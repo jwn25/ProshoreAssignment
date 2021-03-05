@@ -11,39 +11,30 @@ import Vue from "vue";
 import App from "./components/App";
 // import vuetify from './plugins/vuetify'
 
+import './filters'
 import router from "./router";
 
 import axios from "./axios.js";
 import VueAxios from "vue-axios";
 Vue.prototype.$http = axios;
 
+
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+Vue.use(VueSweetalert2);
+
+import { systemMixin } from "./mixins";
+Vue.mixin(systemMixin);
+
+import store from "./store/store";
+
 Vue.use(VueAxios, axios);
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-// const app = new Vue({
-//     el: '#app',
-// });
+import VeeValidate from "vee-validate";
+Vue.use(VeeValidate);
 
 new Vue({
-    router,
-    render: (h) => h(App),
-  }).$mount("#app");
-  
+  store,
+  router,
+  render: (h) => h(App),
+}).$mount("#app");
