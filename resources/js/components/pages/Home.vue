@@ -46,7 +46,8 @@ export default {
   data() {
     return {
       topNews: [],
-      latestNews: []
+      latestNews: [],
+      newsLikes: []
     };
   },
 
@@ -54,11 +55,13 @@ export default {
     this.fetchTopNews();
     this.fetchLatestNews();
     this.fetchSources()
+    this.fetchNewsLikes()
   },
   methods: {
     async fetchTopNews() {
+     
       try {
-        let response = await this.$http.get(
+         let response = await this.$newshttp.get(
           "top-headlines?country=in&pageSize=6"
         );
         this.topNews = _.chunk(response.data.articles, 3);
@@ -69,7 +72,7 @@ export default {
 
     async fetchLatestNews() {
       try {
-        let response = await this.$http.get(
+        let response = await this.$newshttp.get(
           "top-headlines?category=technology&pageSize=10"
         );
         this.latestNews = response.data.articles;
@@ -80,10 +83,20 @@ export default {
 
     async fetchSources() {
       try {
-        let response = await this.$http.get(
+        let response = await this.$newshttp.get(
           "sources"
         );
-        console.log(response.data)
+      } catch (e) {
+        console.log("Something went wrong!!");
+      }
+    },
+
+    async fetchNewsLikes() {
+      try {
+        let response = await this.$http.get(
+          "/api/news-likes"
+        );
+        this.newsLikes = response.data.data
       } catch (e) {
         console.log("Something went wrong!!");
       }

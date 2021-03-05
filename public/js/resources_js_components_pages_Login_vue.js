@@ -122,44 +122,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 response = _context.sent;
 
-                if (response.data.success) {
-                  localStorage.setItem("accessToken", response.data.accessToken);
+                if (!response.data.success) {
+                  _context.next = 16;
+                  break;
+                }
 
-                  _this.$store.dispatch("updateUserInfo", response.data.userData);
+                localStorage.setItem("accessToken", response.data.accessToken);
 
-                  _this.$store.dispatch("setBearer", response.data.accessToken); // Update user details
-                  // commit("UPDATE_USER_INFO", response.data.userData, { root: true });
-                  // // Set bearer token in axios
-                  // commit("SET_BEARER", r);
-                  // router.push(router.currentRoute.query.to || new_route)
+                _this.$store.dispatch("updateUserInfo", response.data.userData);
 
-
-                  _this.$swal({
-                    icon: "success",
-                    title: "Success",
-                    text: "Successfully logged in!"
-                  });
-
-                  router.push("/");
-                } else {
-                  _this.$swal({
-                    icon: "error",
-                    title: "Error",
-                    text: "Invalid login credentials!"
-                  });
-                } // } catch (error) {
-                //   this.errors.clear();
-                //   let server_errors = error.response.data.errors;
-                //   for (let error_key in server_errors) {
-                //     this.errors.add({
-                //       field: error_key,
-                //       msg: server_errors[error_key][0],
-                //     });
-                //   }
-                // }
+                _this.$store.dispatch("setBearer", response.data.accessToken); // Update user details
+                // commit("UPDATE_USER_INFO", response.data.userData, { root: true });
+                // // Set bearer token in axios
+                // commit("SET_BEARER", r);
+                // router.push(router.currentRoute.query.to || new_route)
 
 
-              case 9:
+                _this.$swal({
+                  icon: "success",
+                  title: "Success",
+                  text: "Successfully logged in!"
+                });
+
+                return _context.abrupt("return", _this.$router.push("/"));
+
+              case 16:
+                _this.$swal({
+                  icon: "error",
+                  title: "Error",
+                  text: "Invalid login credentials!"
+                });
+
+              case 17:
               case "end":
                 return _context.stop();
             }

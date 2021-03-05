@@ -83,13 +83,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       topNews: [],
-      latestNews: []
+      latestNews: [],
+      newsLikes: []
     };
   },
   mounted: function mounted() {
     this.fetchTopNews();
     this.fetchLatestNews();
     this.fetchSources();
+    this.fetchNewsLikes();
   },
   methods: {
     fetchTopNews: function fetchTopNews() {
@@ -103,7 +105,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _this.$http.get("top-headlines?country=in&pageSize=6");
+                return _this.$newshttp.get("top-headlines?country=in&pageSize=6");
 
               case 3:
                 response = _context.sent;
@@ -135,7 +137,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return _this2.$http.get("top-headlines?category=technology&pageSize=10");
+                return _this2.$newshttp.get("top-headlines?category=technology&pageSize=10");
 
               case 3:
                 response = _context2.sent;
@@ -167,25 +169,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return _this3.$http.get("sources");
+                return _this3.$newshttp.get("sources");
 
               case 3:
                 response = _context3.sent;
-                console.log(response.data);
-                _context3.next = 10;
+                _context3.next = 9;
                 break;
 
-              case 7:
-                _context3.prev = 7;
+              case 6:
+                _context3.prev = 6;
                 _context3.t0 = _context3["catch"](0);
                 console.log("Something went wrong!!");
 
-              case 10:
+              case 9:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 7]]);
+        }, _callee3, null, [[0, 6]]);
+      }))();
+    },
+    fetchNewsLikes: function fetchNewsLikes() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return _this4.$http.get("/api/news-likes");
+
+              case 3:
+                response = _context4.sent;
+                _this4.newsLikes = response.data.data;
+                _context4.next = 10;
+                break;
+
+              case 7:
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                console.log("Something went wrong!!");
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 7]]);
       }))();
     }
   }
@@ -204,6 +237,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -224,8 +267,113 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["news"]
+  props: ["news"],
+  data: function data() {
+    return {
+      action: null
+    };
+  },
+  mounted: function mounted() {
+    this.checkLike();
+  },
+  computed: {
+    likeCounts: function likeCounts() {
+      var context = this;
+
+      var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
+        return like.news_title == context.news.title && like.type == 'like';
+      });
+
+      ;
+      return like_check.length;
+    },
+    dislikeCounts: function dislikeCounts() {
+      var context = this;
+
+      var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
+        return like.news_title == context.news.title && like.type == 'dislike';
+      });
+
+      ;
+      return like_check.length;
+    }
+  },
+  methods: {
+    checkLike: function checkLike() {
+      if (!this.$store.state.isUserLoggedIn()) {
+        return;
+      }
+
+      var context = this;
+
+      var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
+        return like.user_id === context.$store.state.AppActiveUser.id && like.news_title == context.news.title;
+      });
+
+      if (like_check[0]) {
+        this.action = like_check[0].type;
+      }
+    },
+    likeNews: function likeNews(flag) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+
+                if (_this.$store.state.isUserLoggedIn()) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.$router.push("/login"));
+
+              case 3:
+                _context.next = 5;
+                return _this.$http.post("/api/news/action", {
+                  like: flag,
+                  news: _this.news.title
+                });
+
+              case 5:
+                response = _context.sent;
+
+                if (response.data.success) {
+                  _this.action = response.data.current_action.type;
+
+                  _this.$parent.fetchNewsLikes();
+                }
+
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
+    }
+  }
 });
 
 /***/ }),
@@ -241,6 +389,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -271,8 +429,115 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["news"]
+  props: ["news"],
+  data: function data() {
+    return {
+      action: null
+    };
+  },
+  mounted: function mounted() {
+    this.checkLike();
+  },
+  computed: {
+    likeCounts: function likeCounts() {
+      var context = this;
+
+      var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
+        return like.news_title == context.news.title && like.type == 'like';
+      });
+
+      ;
+      return like_check.length;
+    },
+    dislikeCounts: function dislikeCounts() {
+      var context = this;
+
+      var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
+        return like.news_title == context.news.title && like.type == 'dislike';
+      });
+
+      ;
+      return like_check.length;
+    }
+  },
+  methods: {
+    checkLike: function checkLike() {
+      if (!this.$store.state.isUserLoggedIn()) {
+        return;
+      }
+
+      var context = this;
+
+      var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
+        return like.user_id === context.$store.state.AppActiveUser.id && like.news_title == context.news.title;
+      });
+
+      if (like_check[0]) {
+        this.action = like_check[0].type;
+      }
+    },
+    likeNews: function likeNews(flag) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+
+                if (_this.$store.state.isUserLoggedIn()) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.$router.push("/login"));
+
+              case 3:
+                _context.next = 5;
+                return _this.$http.post("/api/news/action", {
+                  like: flag,
+                  news: _this.news.title
+                });
+
+              case 5:
+                response = _context.sent;
+
+                if (response.data.success) {
+                  _this.action = response.data.current_action.type;
+
+                  _this.$parent.fetchNewsLikes();
+                }
+
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
+    }
+  }
 });
 
 /***/ }),
@@ -1403,21 +1668,31 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _vm._m(0)
+    _c("div", { staticClass: "card-footer" }, [
+      _c("i", {
+        staticClass: "bi-hand-thumbs-up react--icons",
+        class: _vm.action == "like" ? "text-success" : "",
+        on: {
+          click: function($event) {
+            return _vm.likeNews(true)
+          }
+        }
+      }),
+      _vm._v(_vm._s(_vm.likeCounts) + "\n          "),
+      _c("i", {
+        staticClass: "ml-3 bi-hand-thumbs-down react--icons",
+        class: _vm.action == "dislike" ? "text-danger" : "",
+        on: {
+          click: function($event) {
+            return _vm.likeNews(false)
+          }
+        }
+      }),
+      _vm._v(_vm._s(_vm.dislikeCounts) + "\n  ")
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c("i", { staticClass: "bi-hand-thumbs-up react--icons" }),
-      _vm._v(" "),
-      _c("i", { staticClass: "bi-hand-thumbs-down react--icons" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -1488,24 +1763,34 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "react--buttons" }, [
+            _c("i", {
+              staticClass: "bi-hand-thumbs-up react--icons",
+              class: _vm.action == "like" ? "text-success" : "",
+              on: {
+                click: function($event) {
+                  return _vm.likeNews(true)
+                }
+              }
+            }),
+            _vm._v(_vm._s(_vm.likeCounts) + "\n          "),
+            _c("i", {
+              staticClass: "ml-3 bi-hand-thumbs-down react--icons",
+              class: _vm.action == "dislike" ? "text-danger" : "",
+              on: {
+                click: function($event) {
+                  return _vm.likeNews(false)
+                }
+              }
+            }),
+            _vm._v(_vm._s(_vm.dislikeCounts) + "\n        ")
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "react--buttons" }, [
-      _c("i", { staticClass: "bi-hand-thumbs-up react--icons" }),
-      _vm._v(" "),
-      _c("i", { staticClass: "bi-hand-thumbs-down react--icons" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

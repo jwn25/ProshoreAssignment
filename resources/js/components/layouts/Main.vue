@@ -42,8 +42,10 @@
               <li class="nav-item">
                 <a href="#" class="text-light">{{ activeUserInfo.name }}</a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="text-light"><i class="bs-box-arrow-right"></i></a>
+              <li class="nav-item ml-3">
+                <a href="#" class="text-light" @click="logout">
+                  <i class="bi-box-arrow-right"></i>
+                </a>
               </li>
             </ul>
           </div>
@@ -68,6 +70,16 @@ export default {
   computed: {
     activeUserInfo() {
       return this.$store.state.AppActiveUser;
+    },
+  },
+  methods: {
+    logout() {
+      if (localStorage.getItem("accessToken")) {
+        localStorage.removeItem("accessToken");
+        this.$store.dispatch("updateUserInfo", {});
+        localStorage.removeItem("userInfo");
+        this.$router.push("/login").catch(() => {});
+      }
     },
   },
 };

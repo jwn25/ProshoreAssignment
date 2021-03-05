@@ -14,9 +14,26 @@ import App from "./components/App";
 import './filters'
 import router from "./router";
 
-import axios from "./axios.js";
+import {NewsAxios, ApiAxios} from "./axios.js";
 import VueAxios from "vue-axios";
-Vue.prototype.$http = axios;
+Vue.prototype.$newshttp = NewsAxios;
+Vue.prototype.$http = ApiAxios;
+
+Vue.use(VueAxios, ApiAxios);
+
+ApiAxios.interceptors.request.use((config) => {
+  let access_token = getStorageItem("accessToken");
+  if (access_token && !config.headers.common.hasOwnProperty("Authorization")) {
+    config.headers.common.Authorization =
+      "Bearer " + getStorageItem("accessToken");
+  }
+  return config;
+});
+function getStorageItem(key) {
+  return (
+      window.sessionStorage.getItem(key) || window.localStorage.getItem(key)
+  );
+}
 
 
 import VueSweetalert2 from 'vue-sweetalert2';

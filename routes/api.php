@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\NewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/user-signup', [AuthController::class, 'signup']);
 Route::post('/user-login', [AuthController::class, 'login']);
+Route::get('/news-likes', [NewsController::class, 'getNewsLikes']);
+
+Route::middleware('auth:apiUser')->group(function () {
+    Route::post('/news/action', [NewsController::class, 'postAction']);
+});

@@ -1869,14 +1869,30 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // window
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_5__.default.prototype.$http = _axios_js__WEBPACK_IMPORTED_MODULE_3__.default;
+vue__WEBPACK_IMPORTED_MODULE_5__.default.prototype.$newshttp = _axios_js__WEBPACK_IMPORTED_MODULE_3__.NewsAxios;
+vue__WEBPACK_IMPORTED_MODULE_5__.default.prototype.$http = _axios_js__WEBPACK_IMPORTED_MODULE_3__.ApiAxios;
+vue__WEBPACK_IMPORTED_MODULE_5__.default.use((vue_axios__WEBPACK_IMPORTED_MODULE_4___default()), _axios_js__WEBPACK_IMPORTED_MODULE_3__.ApiAxios);
+_axios_js__WEBPACK_IMPORTED_MODULE_3__.ApiAxios.interceptors.request.use(function (config) {
+  var access_token = getStorageItem("accessToken");
+
+  if (access_token && !config.headers.common.hasOwnProperty("Authorization")) {
+    config.headers.common.Authorization = "Bearer " + getStorageItem("accessToken");
+  }
+
+  return config;
+});
+
+function getStorageItem(key) {
+  return window.sessionStorage.getItem(key) || window.localStorage.getItem(key);
+}
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vue_sweetalert2__WEBPACK_IMPORTED_MODULE_6__.default);
 
 vue__WEBPACK_IMPORTED_MODULE_5__.default.mixin(_mixins__WEBPACK_IMPORTED_MODULE_8__.systemMixin);
 
-vue__WEBPACK_IMPORTED_MODULE_5__.default.use((vue_axios__WEBPACK_IMPORTED_MODULE_4___default()), _axios_js__WEBPACK_IMPORTED_MODULE_3__.default);
+vue__WEBPACK_IMPORTED_MODULE_5__.default.use((vue_axios__WEBPACK_IMPORTED_MODULE_4___default()), axios);
 
 vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vee_validate__WEBPACK_IMPORTED_MODULE_10__.default);
 new vue__WEBPACK_IMPORTED_MODULE_5__.default({
@@ -1898,18 +1914,23 @@ new vue__WEBPACK_IMPORTED_MODULE_5__.default({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "NewsAxios": () => (/* binding */ NewsAxios),
+/* harmony export */   "ApiAxios": () => (/* binding */ ApiAxios)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var baseURL = "https://newsapi.org/v2/";
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+var NewsAxios = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   baseURL: baseURL,
   headers: {
     'x-api-key': "2291cbaf16ef460e8a96aaaa46621786"
   }
-}));
+});
+var ApiAxios = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
+  baseURL: '/'
+});
+
 
 /***/ }),
 

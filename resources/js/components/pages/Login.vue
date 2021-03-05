@@ -88,7 +88,7 @@ export default {
           text: "Successfully logged in!",
         });
 
-        router.push("/");
+        return this.$router.push("/");
       } else {
         this.$swal({
           icon: "error",

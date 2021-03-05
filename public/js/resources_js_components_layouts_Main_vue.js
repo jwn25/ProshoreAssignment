@@ -76,10 +76,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
     activeUserInfo: function activeUserInfo() {
       return this.$store.state.AppActiveUser;
+    }
+  },
+  methods: {
+    logout: function logout() {
+      if (localStorage.getItem("accessToken")) {
+        localStorage.removeItem("accessToken");
+        this.$store.dispatch("updateUserInfo", {});
+        localStorage.removeItem("userInfo");
+        this.$router.push("/login")["catch"](function () {});
+      }
     }
   }
 });
@@ -254,7 +266,17 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _vm._m(4)
+                      _c("li", { staticClass: "nav-item ml-3" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "text-light",
+                            attrs: { href: "#" },
+                            on: { click: _vm.logout }
+                          },
+                          [_c("i", { staticClass: "bi-box-arrow-right" })]
+                        )
+                      ])
                     ])
               ]
             )
@@ -267,7 +289,7 @@ var render = function() {
       _c("div", { staticClass: "container" }, [_c("router-view")], 1)
     ]),
     _vm._v(" "),
-    _vm._m(5)
+    _vm._m(4)
   ])
 }
 var staticRenderFns = [
@@ -321,16 +343,6 @@ var staticRenderFns = [
     return _c("li", { staticClass: "nav-item" }, [
       _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
         _vm._v("Pricing")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "text-light", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "bs-box-arrow-right" })
       ])
     ])
   },
