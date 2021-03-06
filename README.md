@@ -1,62 +1,47 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# News Portal (Technical challenge project)
+**Developed By: Jeevan Dhakal**
+This is the demo project for proshore as a part of technical challenge to fetch news and display it for end users.  All the news were fetched using https://newsapi.org/ APIs.  
+It took around 7 hours to complete this project. 
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Installation Processes
 
-## About Laravel
+ 1. Clone the whole project using ssh or https.  `git clone https://github.com/jwn25/ProshoreAssignment.git`
+ 2. Navigate to project directory and run `composer install`
+ 3. Copy `.env.example` and rename it to `.env`
+ 4. Create your database and update credentials on .env file
+ 5. Run `php artisan key:generate` to generate application key.
+ 6. Run `php artisan jwt:secret` to intialize jwt package.
+ 7. Create your account on https://newsapi.org/ and generate news api key.
+ 8. Set api key on `.env` as `MIX_NEWS_API_KEY=YOUR_API_KEY`
+ 9. Run `npm install`
+ 10. Finally run `npm run dev`  to compile all the assets.
+ 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Usage
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+ - Run `php artisan serve` on project directory
+ - You will be able to access the system on http://127.0.0.1:8000
+ 
 
-## Learning Laravel
+## Tools Used
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+ 1. **Programming Language :** PHP
+ 2. **Framework :** Laravel (v 8)
+ 3. **Javascript Framework :** Vue.js
+ 5. **Design Framework :** Boostrap 4  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Screenshots
 
-## Laravel Sponsors
+![enter image description here](https://i.ibb.co/qjs4wts/Screenshot-from-2021-03-06-09-40-21.png)
+<br>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+![enter image description here](https://i.ibb.co/7VXkJ9S/Screenshot-from-2021-03-06-09-40-26.png)
+<br>
+![enter image description here](https://i.ibb.co/7tFmg9M/Screenshot-from-2021-03-06-09-41-04.png)
+<br>
+![enter image description here](https://i.ibb.co/ft18ZZG/Screenshot-from-2021-03-06-09-40-56.png)
+<br>
+![enter image description here](https://i.ibb.co/p1vHDVR/Screenshot-from-2021-03-06-09-40-42.png)
+<br>
+![enter image description here](https://i.ibb.co/JvJp2yZ/Screenshot-from-2021-03-06-09-40-33.png)

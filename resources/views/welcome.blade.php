@@ -8,16 +8,9 @@
     <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <title>{{ env('APP_NAME')}} - Dashbaord</title>
-    <!-- Styles -->
-    {{-- <link rel="stylesheet" href="{{ asset('dashboard/css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboard/css/iconfont.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboard/css/material-icons/material-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboard/css/vuesax.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboard/css/prism-tomorrow.css') }}"> --}}
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
+    <title>{{ env('APP_NAME')}}</title>
     <!-- Favicon -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="shortcut icon" href="{{ asset('images/logo/favicon.png') }}">
   </head>
   <body>
@@ -26,13 +19,6 @@
     </noscript>
     <div id="app">
     </div>
-
-    <!-- <script src="js/app.js"></script> -->
-    {{-- @if(request()->is('admin/student-admission'))
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
-    @endif --}}
-    
     <script src="{{ asset('js/app.js') }}"></script>
-
   </body>
 </html>

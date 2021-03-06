@@ -303,6 +303,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["news"],
@@ -319,20 +329,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var context = this;
 
       var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
-        return like.news_title == context.news.title && like.type == 'like';
+        return like.news_title == context.news.title && like.type == "like";
       });
 
-      ;
       return like_check.length;
     },
     dislikeCounts: function dislikeCounts() {
       var context = this;
 
       var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
-        return like.news_title == context.news.title && like.type == 'dislike';
+        return like.news_title == context.news.title && like.type == "dislike";
       });
 
-      ;
       return like_check.length;
     }
   },
@@ -467,6 +475,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["news"],
@@ -483,20 +497,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var context = this;
 
       var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
-        return like.news_title == context.news.title && like.type == 'like';
+        return like.news_title == context.news.title && like.type == "like";
       });
 
-      ;
       return like_check.length;
     },
     dislikeCounts: function dislikeCounts() {
       var context = this;
 
       var like_check = lodash__WEBPACK_IMPORTED_MODULE_1___default().filter(this.$parent.newsLikes, function (like) {
-        return like.news_title == context.news.title && like.type == 'dislike';
+        return like.news_title == context.news.title && like.type == "dislike";
       });
 
-      ;
       return like_check.length;
     }
   },
@@ -1788,15 +1800,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card mb-3" }, [
-    _c("img", {
-      staticClass: "card-img-top",
-      attrs: {
-        src: _vm.news.urlToImage
-          ? _vm.news.urlToImage
-          : "/images/placeholder.jpg",
-        alt: "..."
-      }
-    }),
+    _c("a", { attrs: { href: _vm.news.url, target: "_blank" } }, [
+      _c("img", {
+        staticClass: "card-img-top",
+        attrs: {
+          src: _vm.news.urlToImage
+            ? _vm.news.urlToImage
+            : "/images/placeholder.jpg",
+          alt: "..."
+        }
+      })
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
       _c("small", { staticClass: "text-muted" }, [
@@ -1809,7 +1823,11 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.news.title))]),
+      _c("a", { attrs: { href: _vm.news.url, target: "_blank" } }, [
+        _c("h5", { staticClass: "card-title" }, [
+          _vm._v(_vm._s(_vm.news.title))
+        ])
+      ]),
       _vm._v(" "),
       _c("small", { staticClass: "text-muted" }, [
         _c("strong", [_vm._v("Posted On:")]),
@@ -1842,7 +1860,7 @@ var render = function() {
           }
         }
       }),
-      _vm._v(_vm._s(_vm.likeCounts) + "\n          "),
+      _vm._v("\n    " + _vm._s(_vm.likeCounts) + "\n    "),
       _c("i", {
         staticClass: "ml-3 bi-hand-thumbs-down react--icons",
         class: _vm.action == "dislike" ? "text-danger" : "",
@@ -1852,7 +1870,7 @@ var render = function() {
           }
         }
       }),
-      _vm._v(_vm._s(_vm.dislikeCounts) + "\n  ")
+      _vm._v("\n    " + _vm._s(_vm.dislikeCounts) + "\n  ")
     ])
   ])
 }
@@ -1883,15 +1901,17 @@ var render = function() {
     _c("div", { staticClass: "card-body" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-sm-5" }, [
-          _c("img", {
-            staticClass: "card-img-top",
-            attrs: {
-              src: _vm.news.urlToImage
-                ? _vm.news.urlToImage
-                : "/images/placeholder.jpg",
-              alt: "..."
-            }
-          })
+          _c("a", { attrs: { href: _vm.news.url, target: "_blank" } }, [
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: {
+                src: _vm.news.urlToImage
+                  ? _vm.news.urlToImage
+                  : "/images/placeholder.jpg",
+                alt: "..."
+              }
+            })
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-sm-7" }, [
@@ -1905,7 +1925,9 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("h5", [_vm._v(_vm._s(_vm.news.title))]),
+          _c("a", { attrs: { href: _vm.news.url, target: "_blank" } }, [
+            _c("h5", [_vm._v(_vm._s(_vm.news.title))])
+          ]),
           _vm._v(" "),
           _c("small", { staticClass: "text-muted" }, [
             _c("strong", [_vm._v("Posted On:")]),
@@ -1937,7 +1959,7 @@ var render = function() {
                 }
               }
             }),
-            _vm._v(_vm._s(_vm.likeCounts) + "\n          "),
+            _vm._v("\n          " + _vm._s(_vm.likeCounts) + "\n          "),
             _c("i", {
               staticClass: "ml-3 bi-hand-thumbs-down react--icons",
               class: _vm.action == "dislike" ? "text-danger" : "",
@@ -1947,7 +1969,7 @@ var render = function() {
                 }
               }
             }),
-            _vm._v(_vm._s(_vm.dislikeCounts) + "\n        ")
+            _vm._v("\n          " + _vm._s(_vm.dislikeCounts) + "\n        ")
           ])
         ])
       ])

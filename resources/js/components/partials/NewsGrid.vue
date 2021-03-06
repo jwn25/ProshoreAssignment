@@ -3,15 +3,19 @@
     <div class="card-body">
       <div class="row">
         <div class="col-sm-5">
-          <img
-            :src="news.urlToImage ? news.urlToImage : '/images/placeholder.jpg'"
-            class="card-img-top"
-            alt="..."
-          />
+          <a :href="news.url" target="_blank">
+            <img
+              :src="news.urlToImage ? news.urlToImage : '/images/placeholder.jpg'"
+              class="card-img-top"
+              alt="..."
+            />
+          </a>
         </div>
         <div class="col-sm-7">
           <small class="text-muted">Author: {{ news.author }} ({{ news.source.name }})</small>
-          <h5>{{news.title}}</h5>
+          <a :href="news.url" target="_blank">
+            <h5>{{news.title}}</h5>
+          </a>
           <small class="text-muted">
             <strong>Posted On:</strong>
             {{ news.publishedAt | date_format('MMMM Do YYYY, h:mm a') }}
@@ -23,12 +27,14 @@
               class="bi-hand-thumbs-up react--icons"
               :class="action == 'like' ? 'text-success':''"
               @click="likeNews(true)"
-            ></i>{{ likeCounts }}
+            ></i>
+            {{ likeCounts }}
             <i
               class="ml-3 bi-hand-thumbs-down react--icons"
               :class="action == 'dislike' ? 'text-danger':''"
               @click="likeNews(false)"
-            ></i>{{ dislikeCounts }}
+            ></i>
+            {{ dislikeCounts }}
           </div>
         </div>
       </div>
@@ -49,28 +55,24 @@ export default {
   mounted() {
     this.checkLike();
   },
-  computed:{
+  computed: {
     likeCounts() {
       let context = this;
       let like_check = _.filter(this.$parent.newsLikes, function (like) {
-        return (
-          like.news_title == context.news.title && like.type == 'like'
-        );
-      });;
+        return like.news_title == context.news.title && like.type == "like";
+      });
 
-      return like_check.length
+      return like_check.length;
     },
 
     dislikeCounts() {
       let context = this;
       let like_check = _.filter(this.$parent.newsLikes, function (like) {
-        return (
-          like.news_title == context.news.title && like.type == 'dislike'
-        );
-      });;
+        return like.news_title == context.news.title && like.type == "dislike";
+      });
 
-      return like_check.length
-    }
+      return like_check.length;
+    },
   },
   methods: {
     checkLike() {
@@ -102,7 +104,7 @@ export default {
 
         if (response.data.success) {
           this.action = response.data.current_action.type;
-          this.$parent.fetchNewsLikes()
+          this.$parent.fetchNewsLikes();
         }
       } catch (e) {
         console.log(e);
