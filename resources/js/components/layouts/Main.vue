@@ -20,14 +20,14 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
+              <li class="nav-item ">
                 <router-link class="nav-link" to="/">Home</router-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <router-link class="nav-link" to="/news">News</router-link>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                 <li class="nav-item">
+                <router-link class="nav-link" to="/headlines">Headlines</router-link>
               </li>
             </ul>
             <ul class="navbar-nav my-2 my-lg-0" v-if="!isUserLoggedIn()">
@@ -57,9 +57,9 @@
         <router-view></router-view>
       </div>
     </div>
-    <footer class="text-light navbar-dark bg-dark p-3">
+    <footer class="text-light navbar-dark bg-dark p-3 mt-4">
       <div class="container">
-        <p>Album example is © Bootstrap, but please download and customize it for yourself!</p>
+        <p>Developed by Jeevan Dhakal!</p>
       </div>
     </footer>
   </div>

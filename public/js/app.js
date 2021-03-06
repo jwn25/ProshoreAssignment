@@ -1859,11 +1859,9 @@ __webpack_require__.r(__webpack_exports__);
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // window.Vue = require('vue').default;
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
-
- // import vuetify from './plugins/vuetify'
 
 
 
@@ -1924,7 +1922,7 @@ var baseURL = "https://newsapi.org/v2/";
 var NewsAxios = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   baseURL: baseURL,
   headers: {
-    'x-api-key': "2291cbaf16ef460e8a96aaaa46621786"
+    'x-api-key': "bdfed9fb9874435abb981fabd4eeaae4"
   }
 });
 var ApiAxios = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
@@ -2088,17 +2086,23 @@ var routes = [{
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_layouts_Main_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/layouts/Main.vue */ "./resources/js/components/layouts/Main.vue"));
   },
-  // beforeEnter(to, from, next) {
-  //   store.dispatch("settings/fetchSettings", {next});
-  // },
   children: [{
     path: "/",
     name: "home-page",
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_pages_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/pages/Home.vue */ "./resources/js/components/pages/Home.vue"));
-    },
-    meta: {
-      rule: "admin"
+    }
+  }, {
+    path: "/news",
+    name: "news-page",
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_pages_News_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/pages/News.vue */ "./resources/js/components/pages/News.vue"));
+    }
+  }, {
+    path: "/headlines",
+    name: "headlines-page",
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_pages_Headlines_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/pages/Headlines.vue */ "./resources/js/components/pages/Headlines.vue"));
     }
   }, {
     path: "/login",
@@ -2165,24 +2169,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/*=========================================================================================
-  File Name: mutations.js
-  Description: Vuex Store - mutations
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 var mutations = {
   UPDATE_USER_INFO: function UPDATE_USER_INFO(state, payload) {
-    var userInfo = JSON.parse(localStorage.getItem("userInfo")); // console.log(Object.keys(payload));
-    // for (const property of Object.keys(payload)) {
-    //   if (payload[property] != null) {
-    //     state.AppActiveUser[property] = payload[property]
-    //     userInfo[property] = payload[property]
-    //   }
-    // }
-
+    var userInfo = JSON.parse(localStorage.getItem("userInfo"));
     state.AppActiveUser = payload;
     localStorage.setItem("userInfo", JSON.stringify(payload));
   },
@@ -2245,14 +2234,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./state */ "./resources/js/store/state.js");
 /* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/mutations.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./actions */ "./resources/js/store/actions.js");
-/*=========================================================================================
-  File Name: store.js
-  Description: Vuex store
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 
 
 
@@ -91014,7 +90995,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_layouts_Main_vue":1,"resources_js_components_pages_Home_vue":1,"resources_js_components_pages_Login_vue":1,"resources_js_components_pages_Signup_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_layouts_Main_vue":1,"resources_js_components_pages_Home_vue":1,"resources_js_components_pages_News_vue":1,"resources_js_components_pages_Headlines_vue":1,"resources_js_components_pages_Login_vue":1,"resources_js_components_pages_Signup_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

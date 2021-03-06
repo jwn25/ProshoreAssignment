@@ -6,10 +6,8 @@
 
 require('./bootstrap');
 
-// window.Vue = require('vue').default;
 import Vue from "vue";
 import App from "./components/App";
-// import vuetify from './plugins/vuetify'
 
 import './filters'
 import router from "./router";

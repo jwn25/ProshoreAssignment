@@ -6,17 +6,27 @@ const routes = [
     // =============================================================================
     path: "/",
     component: () => import("./components/layouts/Main.vue"),
-    // beforeEnter(to, from, next) {
-    //   store.dispatch("settings/fetchSettings", {next});
-    // },
+  
     children: [
       {
         path: "/",
         name: "home-page",
         component: () => import("./components/pages/Home.vue"),
-        meta: {
-          rule: "admin",
-        },
+       
+      },
+
+      {
+        path: "/news",
+        name: "news-page",
+        component: () => import("./components/pages/News.vue"),
+       
+      },
+
+      {
+        path: "/headlines",
+        name: "headlines-page",
+        component: () => import("./components/pages/Headlines.vue"),
+       
       },
 
       {

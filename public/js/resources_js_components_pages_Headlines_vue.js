@@ -1,4 +1,4 @@
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_components_pages_Home_vue"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_components_pages_Headlines_vue"],{
 
 /***/ "./node_modules/@babel/runtime/regenerator/index.js":
 /*!**********************************************************!*\
@@ -11,10 +11,10 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Home.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Home.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Headlines.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Headlines.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -24,10 +24,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _partials_NewsCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../partials/NewsCard */ "./resources/js/components/partials/NewsCard.vue");
-/* harmony import */ var _partials_NewsGrid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../partials/NewsGrid */ "./resources/js/components/partials/NewsGrid.vue");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _partials_NewsCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../partials/NewsCard */ "./resources/js/components/partials/NewsCard.vue");
+/* harmony import */ var _partials_NewsGrid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../partials/NewsGrid */ "./resources/js/components/partials/NewsGrid.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -84,30 +84,86 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    NewsGrid: _partials_NewsGrid__WEBPACK_IMPORTED_MODULE_2__.default,
-    NewsCard: _partials_NewsCard__WEBPACK_IMPORTED_MODULE_1__.default
+    NewsCard: _partials_NewsCard__WEBPACK_IMPORTED_MODULE_2__.default,
+    NewsGrid: _partials_NewsGrid__WEBPACK_IMPORTED_MODULE_3__.default
   },
   data: function data() {
     return {
-      topNews: [],
-      topNewsUs: [],
-      latestNews: [],
+      loading: true,
+      filters: {
+        categories: [],
+        countries: []
+      },
+      applied_filters: {
+        q: "",
+        country: "us",
+        pageSize: 12,
+        categories: [],
+        page: 1
+      },
+      all_news: [],
+      countries: {
+        us: "United States",
+        no: "Norway",
+        au: "Australia",
+        it: "Italy",
+        sa: "Saudi Arabia",
+        pk: "Pakistan",
+        gb: "United Kingdom",
+        de: "Germany",
+        br: "Brazil",
+        ca: "Canada",
+        es: "Spain",
+        ar: "Argentina",
+        fr: "France",
+        "in": "India",
+        is: "Island",
+        ru: "Russia",
+        se: "Sweden",
+        za: "South Africa",
+        ie: "Ireland",
+        nl: "Netherlands",
+        zh: "Singapore"
+      },
       newsLikes: []
     };
   },
   mounted: function mounted() {
-    this.fetchTopNewsUs();
-    this.fetchTopNews();
-    this.fetchLatestNews();
+    this.fetchSources();
+    this.fetchNews();
     this.fetchNewsLikes();
   },
   methods: {
-    fetchTopNews: function fetchTopNews() {
+    fetchNewsLikes: function fetchNewsLikes() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -118,11 +174,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _this.$newshttp.get("top-headlines?country=in&pageSize=6");
+                return _this.$http.get("/api/news-likes");
 
               case 3:
                 response = _context.sent;
-                _this.topNews = lodash__WEBPACK_IMPORTED_MODULE_3___default().chunk(response.data.articles, 3);
+                _this.newsLikes = response.data.data;
                 _context.next = 10;
                 break;
 
@@ -139,39 +195,62 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[0, 7]]);
       }))();
     },
-    fetchTopNewsUs: function fetchTopNewsUs() {
+    fetchNews: function fetchNews() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response;
+        var payload, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return _this2.$newshttp.get("top-headlines?country=us&pageSize=3");
+                _this2.loading = true;
+                _context2.prev = 1;
+                payload = {
+                  category: _this2.applied_filters.categories.join(","),
+                  q: _this2.applied_filters.q,
+                  country: _this2.applied_filters.country,
+                  pageSize: _this2.applied_filters.pageSize,
+                  page: _this2.applied_filters.page
+                };
+                _context2.next = 5;
+                return _this2.$newshttp.get("top-headlines", {
+                  params: payload
+                });
 
-              case 3:
+              case 5:
                 response = _context2.sent;
-                _this2.topNewsUs = response.data.articles;
-                _context2.next = 10;
+                _this2.all_news = response.data.articles;
+                _context2.next = 12;
                 break;
 
-              case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](1);
                 console.log("Something went wrong!!");
 
-              case 10:
+              case 12:
+                _context2.prev = 12;
+                _this2.loading = false;
+                return _context2.finish(12);
+
+              case 15:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 7]]);
+        }, _callee2, null, [[1, 9, 12, 15]]);
       }))();
     },
-    fetchLatestNews: function fetchLatestNews() {
+    nextPage: function nextPage() {
+      this.applied_filters.page = this.applied_filters.page + 1;
+      this.fetchNews();
+    },
+    prevPage: function prevPage() {
+      this.applied_filters.page = this.applied_filters.page - 1;
+      this.fetchNews();
+    },
+    fetchSources: function fetchSources() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
@@ -182,57 +261,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return _this3.$newshttp.get("top-headlines?category=technology&pageSize=10");
+                return _this3.$newshttp.get("sources");
 
               case 3:
                 response = _context3.sent;
-                _this3.latestNews = response.data.articles;
-                _context3.next = 10;
+                _this3.filters.sources = response.data.sources;
+                _this3.filters.countries = lodash__WEBPACK_IMPORTED_MODULE_1___default().uniq(lodash__WEBPACK_IMPORTED_MODULE_1___default().map(response.data.sources, "country"));
+                _this3.filters.categories = lodash__WEBPACK_IMPORTED_MODULE_1___default().uniq(lodash__WEBPACK_IMPORTED_MODULE_1___default().map(response.data.sources, "category"));
+                _context3.next = 13;
                 break;
 
-              case 7:
-                _context3.prev = 7;
+              case 9:
+                _context3.prev = 9;
                 _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0);
                 console.log("Something went wrong!!");
 
-              case 10:
+              case 13:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 7]]);
-      }))();
-    },
-    fetchNewsLikes: function fetchNewsLikes() {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
-                return _this4.$http.get("/api/news-likes");
-
-              case 3:
-                response = _context4.sent;
-                _this4.newsLikes = response.data.data;
-                _context4.next = 10;
-                break;
-
-              case 7:
-                _context4.prev = 7;
-                _context4.t0 = _context4["catch"](0);
-                console.log("Something went wrong!!");
-
-              case 10:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[0, 7]]);
+        }, _callee3, null, [[0, 9]]);
       }))();
     }
   }
@@ -1314,10 +1364,10 @@ try {
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/Home.vue":
-/*!************************************************!*\
-  !*** ./resources/js/components/pages/Home.vue ***!
-  \************************************************/
+/***/ "./resources/js/components/pages/Headlines.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/pages/Headlines.vue ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1325,8 +1375,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Home_vue_vue_type_template_id_a9aac016___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Home.vue?vue&type=template&id=a9aac016& */ "./resources/js/components/pages/Home.vue?vue&type=template&id=a9aac016&");
-/* harmony import */ var _Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/Home.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Headlines_vue_vue_type_template_id_a3f5f20e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Headlines.vue?vue&type=template&id=a3f5f20e& */ "./resources/js/components/pages/Headlines.vue?vue&type=template&id=a3f5f20e&");
+/* harmony import */ var _Headlines_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Headlines.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/Headlines.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1336,9 +1386,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
-  _Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _Home_vue_vue_type_template_id_a9aac016___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Home_vue_vue_type_template_id_a9aac016___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _Headlines_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Headlines_vue_vue_type_template_id_a3f5f20e___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Headlines_vue_vue_type_template_id_a3f5f20e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -1348,7 +1398,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/pages/Home.vue"
+component.options.__file = "resources/js/components/pages/Headlines.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -1431,10 +1481,10 @@ component.options.__file = "resources/js/components/partials/NewsGrid.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/Home.vue?vue&type=script&lang=js&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/components/pages/Home.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************/
+/***/ "./resources/js/components/pages/Headlines.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/pages/Headlines.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1442,8 +1492,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Home.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Home.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Headlines_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Headlines.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Headlines.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Headlines_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -1479,19 +1529,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/Home.vue?vue&type=template&id=a9aac016&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/pages/Home.vue?vue&type=template&id=a9aac016& ***!
-  \*******************************************************************************/
+/***/ "./resources/js/components/pages/Headlines.vue?vue&type=template&id=a3f5f20e&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/pages/Headlines.vue?vue&type=template&id=a3f5f20e& ***!
+  \************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_a9aac016___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_a9aac016___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Headlines_vue_vue_type_template_id_a3f5f20e___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Headlines_vue_vue_type_template_id_a3f5f20e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_a9aac016___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Home.vue?vue&type=template&id=a9aac016& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Home.vue?vue&type=template&id=a9aac016&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Headlines_vue_vue_type_template_id_a3f5f20e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Headlines.vue?vue&type=template&id=a3f5f20e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Headlines.vue?vue&type=template&id=a3f5f20e&");
 
 
 /***/ }),
@@ -1530,10 +1580,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Home.vue?vue&type=template&id=a9aac016&":
-/*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Home.vue?vue&type=template&id=a9aac016& ***!
-  \**********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Headlines.vue?vue&type=template&id=a3f5f20e&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/pages/Headlines.vue?vue&type=template&id=a3f5f20e& ***!
+  \***************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1547,79 +1597,212 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "mt-4" }, [
-      _c("h1", [_vm._v("Top news in India")]),
+    _c("div", { staticClass: "row mt-4" }, [
+      _c("div", { staticClass: "col-sm-3" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("h4", [_vm._v("Keyword")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.applied_filters.q,
+                    expression: "applied_filters.q"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Keyword" },
+                domProps: { value: _vm.applied_filters.q },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.applied_filters, "q", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card mt-4" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("h4", [_vm._v("Country")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.applied_filters.country,
+                      expression: "applied_filters.country"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "", id: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.applied_filters,
+                        "country",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("Select Country")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.filters.countries, function(country) {
+                    return _c("option", { domProps: { value: country } }, [
+                      _vm._v(_vm._s(_vm.countries[country]))
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card mt-4" }, [
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _c("h4", [_vm._v("Categories")]),
+              _vm._v(" "),
+              _vm._l(_vm.filters.categories, function(category) {
+                return _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.applied_filters.categories,
+                        expression: "applied_filters.categories"
+                      }
+                    ],
+                    attrs: { type: "checkbox", id: "category-" + category },
+                    domProps: {
+                      value: category,
+                      checked: Array.isArray(_vm.applied_filters.categories)
+                        ? _vm._i(_vm.applied_filters.categories, category) > -1
+                        : _vm.applied_filters.categories
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.applied_filters.categories,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = category,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.applied_filters,
+                                "categories",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.applied_filters,
+                                "categories",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.applied_filters, "categories", $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "category-" + category } }, [
+                    _vm._v(_vm._s(category))
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "mt-4 btn btn-primary btn-block",
+            on: { click: _vm.fetchNews }
+          },
+          [_vm._v("Filter")]
+        )
+      ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row" },
-        _vm._l(_vm.topNews, function(topNewsChunk, chunk) {
-          return _c("div", { key: "chunk" + chunk, staticClass: "col-md-6" }, [
-            _c(
+      _c("div", { staticClass: "col-sm-9" }, [
+        !_vm.loading
+          ? _c(
               "div",
               { staticClass: "row" },
-              _vm._l(topNewsChunk, function(news, news_key) {
+              _vm._l(_vm.all_news, function(news) {
                 return _c(
                   "div",
-                  {
-                    key: "top-news-" + news_key,
-                    class:
-                      (chunk === 0 && news_key === 0) ||
-                      (chunk === 1 && news_key === 2)
-                        ? "col-md-12"
-                        : "col-md-6"
-                  },
+                  { staticClass: "col-sm-4" },
                   [_c("NewsCard", { attrs: { news: news } })],
                   1
                 )
               }),
               0
             )
-          ])
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c("div", { staticClass: "mt-4" }, [
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-sm-9" },
-          [
-            _c("h1", [_vm._v("Latest News")]),
-            _vm._v(" "),
-            _vm._l(_vm.latestNews, function(latest_news, latest_news_key) {
-              return _c("NewsGrid", {
-                key: "latest-news-" + latest_news_key,
-                attrs: { news: latest_news }
+          : _c("div", { staticClass: "text-center" }, [
+              _c("img", {
+                staticStyle: { padding: "150px 0px" },
+                attrs: { src: "/images/loading.gif", alt: "", width: "150" }
               })
-            })
-          ],
-          2
-        ),
+            ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-3" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-body" }, [
-              _c("h3", [_vm._v("Top news in US")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c(
-                  "div",
-                  { staticClass: "col-sm-12" },
-                  _vm._l(_vm.topNewsUs, function(top_us, top_us_key) {
-                    return _c("NewsCard", {
-                      key: "latest-news-us" + top_us_key,
-                      attrs: { news: top_us }
-                    })
-                  }),
-                  1
-                )
-              ])
-            ])
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-6" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { disabled: this.applied_filters.page == 1 },
+                on: { click: _vm.prevPage }
+              },
+              [_vm._v("-- Previous")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-6 text-right" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary my-0",
+                on: { click: _vm.nextPage }
+              },
+              [_vm._v("Next --")]
+            )
           ])
         ])
       ])

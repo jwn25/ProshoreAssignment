@@ -207,7 +207,7 @@ var render = function() {
                 _c("ul", { staticClass: "navbar-nav mr-auto" }, [
                   _c(
                     "li",
-                    { staticClass: "nav-item active" },
+                    { staticClass: "nav-item " },
                     [
                       _c(
                         "router-link",
@@ -218,9 +218,34 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _vm._m(2),
+                  _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c(
+                        "router-link",
+                        { staticClass: "nav-link", attrs: { to: "/news" } },
+                        [_vm._v("News")]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _vm._m(3)
+                  _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: "/headlines" }
+                        },
+                        [_vm._v("Headlines")]
+                      )
+                    ],
+                    1
+                  )
                 ]),
                 _vm._v(" "),
                 !_vm.isUserLoggedIn()
@@ -289,7 +314,7 @@ var render = function() {
       _c("div", { staticClass: "container" }, [_c("router-view")], 1)
     ]),
     _vm._v(" "),
-    _vm._m(4)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -330,35 +355,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-        _vm._v("Features")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-        _vm._v("Pricing")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("footer", { staticClass: "text-light navbar-dark bg-dark p-3" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("p", [
-          _vm._v(
-            "Album example is © Bootstrap, but please download and customize it for yourself!"
-          )
+    return _c(
+      "footer",
+      { staticClass: "text-light navbar-dark bg-dark p-3 mt-4" },
+      [
+        _c("div", { staticClass: "container" }, [
+          _c("p", [_vm._v("Developed by Jeevan Dhakal!")])
         ])
-      ])
-    ])
+      ]
+    )
   }
 ]
 render._withStripped = true

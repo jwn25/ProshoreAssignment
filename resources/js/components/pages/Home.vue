@@ -16,18 +16,30 @@
         </div>
       </div>
     </div>
-    <hr>
+    <hr />
     <div class="mt-4">
       <div class="row">
         <div class="col-sm-9">
           <h1>Latest News</h1>
-              <NewsGrid :news="latest_news" v-for="(latest_news, latest_news_key) in latestNews" :key="`latest-news-`+latest_news_key"></NewsGrid>
-
+          <NewsGrid
+            :news="latest_news"
+            v-for="(latest_news, latest_news_key) in latestNews"
+            :key="`latest-news-`+latest_news_key"
+          ></NewsGrid>
         </div>
         <div class="col-sm-3">
           <div class="card">
             <div class="card-body">
-              <h3>Top Sources</h3>
+              <h3>Top news in US</h3>
+              <div class="row">
+                <div class="col-sm-12">
+                  <NewsCard
+                    :news="top_us"
+                    v-for="(top_us, top_us_key) in topNewsUs"
+                    :key="`latest-news-us`+top_us_key"
+                  ></NewsCard>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -46,25 +58,35 @@ export default {
   data() {
     return {
       topNews: [],
+      topNewsUs: [],
       latestNews: [],
-      newsLikes: []
+      newsLikes: [],
     };
   },
 
   mounted() {
+    this.fetchTopNewsUs();
     this.fetchTopNews();
     this.fetchLatestNews();
-    this.fetchSources()
-    this.fetchNewsLikes()
+    this.fetchNewsLikes();
   },
   methods: {
     async fetchTopNews() {
-     
       try {
-         let response = await this.$newshttp.get(
+        let response = await this.$newshttp.get(
           "top-headlines?country=in&pageSize=6"
         );
         this.topNews = _.chunk(response.data.articles, 3);
+      } catch (e) {
+        console.log("Something went wrong!!");
+      }
+    },
+    async fetchTopNewsUs() {
+      try {
+        let response = await this.$newshttp.get(
+          "top-headlines?country=us&pageSize=3"
+        );
+        this.topNewsUs = response.data.articles;
       } catch (e) {
         console.log("Something went wrong!!");
       }
@@ -80,23 +102,10 @@ export default {
         console.log("Something went wrong!!");
       }
     },
-
-    async fetchSources() {
-      try {
-        let response = await this.$newshttp.get(
-          "sources"
-        );
-      } catch (e) {
-        console.log("Something went wrong!!");
-      }
-    },
-
     async fetchNewsLikes() {
       try {
-        let response = await this.$http.get(
-          "/api/news-likes"
-        );
-        this.newsLikes = response.data.data
+        let response = await this.$http.get("/api/news-likes");
+        this.newsLikes = response.data.data;
       } catch (e) {
         console.log("Something went wrong!!");
       }

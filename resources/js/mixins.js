@@ -3,7 +3,6 @@ const systemMixin = {
     isUserLoggedIn() {
     return (localStorage.getItem('userInfo')) ? true : false
     },
-
   }
 };
 

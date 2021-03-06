@@ -1,6 +1,6 @@
 <template>
   <div class="card mb-3">
-    <img :src="news.urlToImage" class="card-img-top" alt="..." />
+    <img   :src="news.urlToImage ? news.urlToImage : '/images/placeholder.jpg'" class="card-img-top" alt="..." />
     <div class="card-body">
       <small class="text-muted">Author: {{ news.author }} ({{ news.source.name }})</small>
       <h5 class="card-title">{{ news.title }}</h5>
