@@ -9,12 +9,13 @@ It took around 7 hours to complete this project.
  2. Navigate to project directory and run `composer install`
  3. Copy `.env.example` and rename it to `.env`
  4. Create your database and update credentials on .env file
- 5. Run `php artisan key:generate` to generate application key.
- 6. Run `php artisan jwt:secret` to intialize jwt package.
- 7. Create your account on https://newsapi.org/ and generate news api key.
- 8. Set api key on `.env` as `MIX_NEWS_API_KEY=YOUR_API_KEY`
- 9. Run `npm install`
- 10. Finally run `npm run dev`  to compile all the assets.
+ 5. Run `php artisan migrate` to migrate all the tables.
+ 6. Run `php artisan key:generate` to generate application key.
+ 7. Run `php artisan jwt:secret` to intialize jwt package.
+ 8. Create your account on https://newsapi.org/ and generate news api key.
+ 9. Set api key on `.env` as `MIX_NEWS_API_KEY=YOUR_API_KEY`
+ 10. Run `npm install`
+ 11. Finally run `npm run dev`  to compile all the assets.
  
 
 
